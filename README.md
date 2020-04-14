@@ -125,7 +125,7 @@ XS_APP_<id>=/caiyun
 ### Rewrite规则：
 
 Apache：
-```
+```ApacheConf
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteCond %{REQUEST_FILENAME} !-f
@@ -138,7 +138,7 @@ Apache：
 </FilesMatch>
 ```
 Nginx:
-```
+```nginx
 try_files $uri $uri/ /index.php$is_args$args;
 location ~ /\.env {
     deny all;
@@ -161,6 +161,10 @@ XS_APP_<id>_DAV_AUTH_ONLY_STANDALONE=true
 #### Nginx配置问题
 若使用WebDAV时Nginx报`405 Method Not Allowed`错误，请在Rewrite规则里增加如下：
 ```nginx
+set $sep "?";
+if ( $is_args = "?" ){
+    set $sep "&";
+}
 error_page  405 =200 $uri${sep}_FORCE_METHOD=$request_method;
 ```
 ### 配置缓存  
