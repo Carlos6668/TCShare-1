@@ -4,7 +4,7 @@ use Flight;
 use TC;
 class password implements abstractRule{
     const cookiePrefix="TCSharePassword_";
-    static function check($path,$rule,$file){
+    static function check(String $path,Array $rule,$file){
         $password=$rule['val'];
         $cName=self::cookiePrefix.md5($rule['route']);
         $error=false;
