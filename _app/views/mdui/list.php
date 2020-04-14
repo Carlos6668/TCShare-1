@@ -99,7 +99,7 @@ function() use($files,$folders,$path,$sort,$order,$current){
 		</li>
 		<?php if($path != '/'):?>
 		<li class="mdui-list-item mdui-ripple">
-			<a href="<?php echo TC::abspath($path,"../");?>">
+			<a href="<?php echo TC::abspath($path,"..");?>/">
 			  <div class="mdui-col-xs-12 mdui-col-sm-7">
 				<i class="mdui-icon material-icons">arrow_upward</i>
 		    	..
@@ -112,7 +112,7 @@ function() use($files,$folders,$path,$sort,$order,$current){
 		
 		<?php foreach($folders as $item):?>
 		<li class="mdui-list-item mdui-ripple">
-			<a href="<?php echo TC::abspath($path,$item->name());?>/">
+			<a href="<?php echo TC::abspath($path,rawurlencode($item->name()));?>/">
 			  <div class="mdui-col-xs-12 mdui-col-sm-7 mdui-text-truncate">
 				<i class="mdui-icon material-icons">folder_open</i>
 		    	<span><?php echo $item->name();?></span>
