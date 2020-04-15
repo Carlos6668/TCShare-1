@@ -1,6 +1,7 @@
 <?php
 namespace xyToki\xyShare\Providers;
 use TC;
+use GuzzleHttp\Client as GuzzleClient;
 use xyToki\xyShare\abstractInfo;
 use xyToki\xyShare\authProvider;
 use xyToki\xyShare\contentProvider;
@@ -49,6 +50,11 @@ class ctyun implements contentProvider {
     private function finpath($path){
         return TC::path("/我的应用/".$this->FD."/".$this->BASE."/".$path,false);
     }
+    function getRedirect($url){
+        $client = new GuzzleClient();
+        $res = $client->get($url, ['allow_redirects' => false]);
+        return $res->getHeaderLine("Location");
+    }
     function getFileInfo($path){
         $finpath=$this->finpath($path);
         $fileInfo=$this->sky->getFileInfo($finpath);
@@ -64,6 +70,7 @@ class ctyun implements contentProvider {
         if(isset($fileInfo['code'])&&isset($fileInfo['message'])){
             throw new \Error("API错误: ".$fileInfo['message']);
         }
+        $fileInfo['fileDownloadUrl'] = $this->getRedirect($fileInfo['fileDownloadUrl']);
         //有md5的，都是文件
         if(!is_array($fileInfo['md5'])){
             return new ctyunFileInfo($fileInfo);

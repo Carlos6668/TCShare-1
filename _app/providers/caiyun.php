@@ -211,7 +211,9 @@ class caiyunFileInfo extends caiyunAbstractInfo implements fileInfo{
                 $transcode = true;
         }
         if($transcode&&$this->file['presentHURL']){
-            return $this->file['presentHURL'];
+            $ph = explode("&ui=",$this->file['presentHURL'],2);
+            $ph1 = explode("&",$ph[1],2);
+            return $ph[0]."&".$ph1[1];
         }
         return $this->url();
     }
