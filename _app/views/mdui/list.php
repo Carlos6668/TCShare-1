@@ -99,7 +99,7 @@ function() use($files,$folders,$path,$sort,$order,$current){
 		</li>
 		<?php if($path != '/'):?>
 		<li class="mdui-list-item mdui-ripple">
-			<a href="<?php echo TC::abspath($path,"..");?>/">
+			<a href="<?php echo str_replace("//","/",TC::abspath($path,"..")+"/");?>">
 			  <div class="mdui-col-xs-12 mdui-col-sm-7">
 				<i class="mdui-icon material-icons">arrow_upward</i>
 		    	..
